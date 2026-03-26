@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for you xajji</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300;400&display=swap">
+    <style>
+        body {
+            margin: 0;
+            font-family:'Poppins',sans-serif;
+            background:linear-gradient(to right, #f5efe6, #e8d8c4) ;
+            display: flex;
+            justify-content: centre;
+            align-items: centre;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            background: #fffaf5;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            max-width: 420px;
+            text-align: centre;
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #6b4f3b;
+        }
+        p { color: #5c4b3b; font-size: 16px;}
+        .typing {
+            border-right: 2px solid #6b4f3b;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink { 50% { border-color: transparent; } }
+        button{
+            margin: 10px;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+
+        #yesBtn { background-color: #6b4f3b; color: white;}
+        #noBtn { background-color: #ddd; }
+
+        .hidden { display: none; }
+
+        .heart{
+            position: absolute;
+            font-size: 20px;
+            animation: floatUp 5s linear infinite;
+            opacity: 0.7s;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh); opacity: 0; }
+            50%{ opacity: 1; }
+            100%{ transform: translateY(-10vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hey Xajji</h1>
+    <p id="typingText" class="typing"></p>
+
+    <p style="margin-top:20px;">So now I just have one question for you </p>
+    <button id="yesBtn">YES</button>
+    <BUtton id="noBtn">NO</BUtton>
+    <div id="response" class="hidden">
+        <h2>You just made me the happiest girl alive</h2>
+        <p>i'll choose you, in every lifetime</p>
+    </div>
+    <audio id="bgMusic" loop>source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3"</audio>
+
+    <script>
+        const story = [
+            "it started so simply... just conversations, laughs, and moments i did not think much about ....",
+          "but slowly, you became my safe space... the one person i look forward to every single day",
+          "Somewhere along the way, without even realising it... I fell for you, Xajji",
+          "and now i cannot imagine my world withou you in it....",
+          "So tell me honestly... WILL YOU BE MINE??"
+        ];
+
+        const typingE1 = document.getElementById("typingText");
+        let line = 0;
+        let chair = 0;
+
+        function typeStory() {
+            if (line < story.length) {
+                if (char < story[line].length) {
+                    typingEl.innerHTML += story[line].charAt(char);
+                    char++;
+                    setTimeout(typeStory, 40);
+                } else {
+                    typingEl.innerHTML += "<br><br>";
+                    line++;
+                    char = 0;
+                    setTimeout(typeStory, 700);
+                }
+            }
+        }
+        typeStory();
+
+        const yesBtn = document.getElementById("yesBtn");
+        const noBtn = document.getElementById("noBtn");
+        const response = document.getElementById("response");
+        const music =document.getElementById("bgMusic");
+
+        document.body.addEventListener("click", () => {
+            music.play();
+        },{ once: true });
+        yesBtn.addEventListener("click",() => {
+            response.classList.remove("hidden");
+            createHearts(25);
+        });
+
+        noBtn.addEventListener("mouseover",()=> {
+            noBtn.style.position = "absolute";
+            noBtn.syle.left = Math.random() * window.innerWidth + "px";
+            noBtn.style.top = Math.random() * window.innerHeight + "px";
+        });
+
+        function createHearts(count) {
+            for (let i = 0; i <count; i++) {
+                const heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.innerHTML = "heart";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+                document.body.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 5000);
+            }
+        }
+    </script>
+</body>
+</html>
